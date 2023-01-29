@@ -4,7 +4,7 @@ node {
      git 'https://github.com/furqankaka11/assignment.git'
     }
      stage('Build docker Image'){
-      app = docker.build("alpha04/nodeapp")
+      app = docker.build("furqan1111/assignment")
     }
      stage('Test Image'){
        app.inside {
