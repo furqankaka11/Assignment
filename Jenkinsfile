@@ -1,4 +1,4 @@
-node {
+pipeline {
      def app 
      stage('clone repository') {
      git 'https://github.com/furqankaka11/assignment.git'
