@@ -1,26 +1,26 @@
 name: Merge DEV into PROD
 
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - DEV
+    branches: [ DEV ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Test changes
-      run: |
-        echo "Running tests"
-        # Run tests here
 
-    - name: Merge DEV into PROD
-      if: success()
-      run: |
-        git checkout PROD
-        git merge DEV
-        git push origin PROD
+        
+    
+    - name: Merge DEV -> PROD
+      uses: devmasx/merge-branch@master
+      with:
+        type: now
+        from_branch: DEV
+        target_branch: PROD
+        github_token: ${{ secrets.GIT_TOKEN }}
+    
