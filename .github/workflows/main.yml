@@ -17,7 +17,7 @@ jobs:
 
     - name: Fetch origin
       run: |
-        git remote set-url origin https://github.com/furqankaka11/assignment.git:${ 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 }@github.com/$assignment.git
+        git remote set-url origin https://github.com/furqankaka11/assignment.git:${ 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 }@github.com/assignment.git
         git fetch origin
 
     - name: Checkout PROD branch
