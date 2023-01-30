@@ -1,26 +1,27 @@
 pipeline {
-    agent { node { label 'nodejs' } }
+    agent any
     stages {
-        stage('Checkout') {
+        stage('build') {
             steps {
-                checkout scm
+                sh 'docker rmi karimshan/docker-repo:latest -f'
+                sh 'docker build -t karimshan/docker-repo:latest . '
             }
         }
-        stage('Build') {
+        
+        stage('login') {
             steps {
-                sh 'npm install'
-            }
+                sh 'docker login -u karimshan -p Karimshan121'
+           }
         }
-        stage('Test') {
+        
+        stage('push') {
             steps {
-                sh 'npm test'
+        sh 'docker push karimshan/docker-repo:latest'
+      
             }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'npm run deploy'
-            }
-        }
-    }
+        }   
+        
+        
+        
+       }    
 }
-
