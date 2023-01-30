@@ -1,0 +1,25 @@
+name: Merge DEV into PROD
+
+on:
+  push:
+    branches:
+      - DEV
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Test changes
+      run: |
+        echo "Running tests"
+        # Run tests here
+    - name: Merge DEV into PROD
+      if: success()
+      run: |
+        git checkout PROD
+        git merge DEV
+        git push origin PROD
