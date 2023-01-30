@@ -28,5 +28,5 @@ jobs:
 
     - name: Merge DEV into PROD
       run: |
-        git merge DEV --allow-unrelated-histories
+        git merge DEV
         git push origin PROD
