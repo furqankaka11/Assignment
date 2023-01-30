@@ -6,20 +6,26 @@ on:
       - DEV
 
 jobs:
-  build:
+  merge:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        ref: DEV
 
-    - name: Test changes
+    - name: Fetch origin
       run: |
-        echo "Running tests"
-        # Run tests here
-    - name: Merge DEV into PROD
-      if: success()
+        git remote set-url origin https://github.com/furqankaka11/assignment.git:${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}@github.com/$GITHUB_REPOSITORY.git
+        git fetch origin
+
+    - name: Checkout PROD branch
       run: |
         git checkout PROD
+        git pull origin PROD
+
+    - name: Merge DEV into PROD
+      run: |
         git merge DEV
         git push origin PROD
