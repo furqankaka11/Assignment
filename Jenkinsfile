@@ -1,30 +1,26 @@
 pipeline {
-    agent {
-        label 'docker'
-    }
+    agent { node { label 'nodejs' } }
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/furqankaka11/assignment.git'
+                checkout scm
             }
         }
-        stage('Build and Run Docker Compose') {
+        stage('Build') {
             steps {
-                sh 'docker-compose build'
-                sh 'docker-compose up -d'
+                sh 'npm install'
             }
         }
-        stage('Run Tests') {
+        stage('Test') {
             steps {
-                sh 'docker-compose run --rm fullstack-app pytest'
+                sh 'npm test'
             }
         }
-        stage('Push Docker Image to Docker Hub') {
+        stage('Deploy') {
             steps {
-                sh 'docker login --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD'
-                sh 'docker tag fullstack-app:latest $DOCKER_HUB_USERNAME/fullstack-app:$BUILD_NUMBER'
-                sh 'docker push $DOCKER_HUB_USERNAME/fullstack-app:$BUILD_NUMBER'
+                sh 'npm run deploy'
             }
         }
     }
 }
+
